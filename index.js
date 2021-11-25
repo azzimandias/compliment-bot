@@ -50,8 +50,6 @@ const parseCompliments = async (chatId) => {
     }
     await sendCompliment(chatId)
 }
-parseCompliments(process.env.DEV_ID).catch(err => {console.log(err)})
-parseCompliments(process.env.USER_ID).catch(err => {console.log(err)})
 
 const parseStickersProg = async () => {
     const getHTML = async (url) => {
@@ -96,6 +94,8 @@ bot.on('message', async msg => {
         await  bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
         flag = !flag
         await parseStickersProg()
+        await parseCompliments(process.env.DEV_ID)
+        await parseCompliments(process.env.USER_ID)
     }
     else if (text === '/start' && flag) {
         await bot.sendMessage(chatId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
