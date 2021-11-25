@@ -47,7 +47,6 @@ const parseCompliments = async (chatId) => {
             //fs.appendFileSync('./data.txt', `${title}\n`)
             compliments.push(title)
         })
-        console.log(compliments[0])
     }
     //await createCompliments()
     await sendCompliment(chatId)
@@ -107,7 +106,7 @@ bot.on('message', async msg => {
         await  bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
     }
     else if (text === "/Go") {
-        await bot.sendMessage(chatId, `${compliments[0][i]}\n#test`);
+        await bot.sendMessage(chatId, `${compliments[i]}\n#test`);
         await  bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
     }
     else {
