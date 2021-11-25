@@ -66,13 +66,13 @@ const parseStickersProg = async () => {
 
 async function sendCompliment(chatId) {
     let date = new Date();
-    if (date.getHours() === 12 || date.getHours() === 23) {
+    if (date.getHours() === 12 || date.getHours() === 20) {
         await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
         i++
     }
     const interval = setInterval(() => {
         let date = new Date();
-        if (date.getHours() === 12 || date.getHours() === 23) {
+        if (date.getHours() === 12 || date.getHours() === 20) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
             i++
         }
