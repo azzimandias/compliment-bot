@@ -1,0 +1,19 @@
+{
+  "name": "corgi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
+    "node-telegram-bot-api": "^0.54.0",
+    "nodemon": "^2.0.15"
+  }
+}
