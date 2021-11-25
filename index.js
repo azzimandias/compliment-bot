@@ -3,6 +3,8 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
+const devId = process.env.DEV_ID
+const userId = process.env.USER_ID
 const bot = new TelegramApi(token, {polling: true})
 const ver = '1.0.0'
 const progStickersArray = [
@@ -48,7 +50,8 @@ const parseCompliments = async (chatId) => {
     }
     await sendCompliment(chatId)
 }
-await parseCompliments('chatId')
+await parseCompliments(devId)
+await parseCompliments(userId)
 
 const parseStickersProg = async () => {
     const getHTML = async (url) => {
