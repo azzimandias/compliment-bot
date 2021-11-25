@@ -44,10 +44,11 @@ const parseCompliments = async (chatId) => {
         const selector = await getHTML(`http://kompli.me/komplimenty-lyubimoj/page/${i}`)
         selector('.post-card__title').each((i, element) => {
             const title = selector(element).find('a').text()
-            fs.appendFileSync('./data.txt', `${title}\n`)
+            //fs.appendFileSync('./data.txt', `${title}\n`)
+            compliments.push(title)
         })
     }
-    await createCompliments()
+    //await createCompliments()
     await sendCompliment(chatId)
 }
 
@@ -98,6 +99,7 @@ bot.on('message', async msg => {
     else if (text === '/start' && flag) {
         await bot.sendMessage(chatId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
+        await parseCompliments(chatId)
     }
     else if (text === '/info') {
         await bot.sendMessage(chatId, `@Corgi_In_Love_bot ver:${ver}\nНаведу шороху в твоем тг!\n#informator`);
