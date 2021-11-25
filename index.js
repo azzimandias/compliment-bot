@@ -23,6 +23,18 @@ const progStickersArray = [
     'https://cdndelivr.com/stickerset/codebark/23/webp',
     'https://cdndelivr.com/stickerset/codebark/24/webp',
 ]
+const cuteStickersArray = [
+    'https://cdndelivr.com/stickerset/blimchik_vk/7/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/6/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/8/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/19/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/20/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/24/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/27/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/32/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/33/webp',
+    'https://cdndelivr.com/stickerset/blimchik_vk/11/webp'
+]
 const errorPhrases = [
     'Я еще не достаточно надрессирован чтобы что-то отвечать!! 🦴',
     'Гав-гав 🐕',
@@ -33,8 +45,14 @@ const errorPhrases = [
 const compliments = []
 
 let flag = false
-let i = 4
+let i = 5
 let j = 0
+
+
+function randomInteger(min, max) {
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    return Math.round(rand);
+}
 
 const parseCompliments = async (chatId) => {
     const getHTML = async (url) => {
@@ -69,6 +87,7 @@ async function sendCompliment(chatId) {
     let date = new Date();
     if (date.getHours() === 9 || date.getHours() === 20) {
         await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
+        await bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
         j++
     }
     const interval = setInterval(() => {
@@ -78,17 +97,13 @@ async function sendCompliment(chatId) {
         let date = new Date();
         if (date.getHours() === 9 || date.getHours() === 17) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
+            bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
             j++
         }
         else if (i >= 1040) {
             clearInterval(interval)
         }
     }, 3600000)
-}
-
-function randomInteger(min, max) {
-    let rand = min - 0.5 + Math.random() * (max - min + 1);
-    return Math.round(rand);
 }
 
 async function forDev(text, msg) {
