@@ -84,11 +84,16 @@ const parseStickersProg = async () => {
 }
 
 async function sendCompliment(chatId) {
-    let date = new Date();
-    if (date.getHours() === 9 || date.getHours() === 20) {
-        await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
-        j++
+    switch (Number(chatId)) {
+        case Number(devId):
+            await bot.sendMessage(devId, `Dev YES`);
+            break
+        case Number(testerId):
+            await bot.sendMessage(devId, `Tester YES`);
+            break
+        case Number(userId):
+            await bot.sendMessage(devId, `User YES`);
+            break
     }
     const interval = setInterval(() => {
         if (j === 3) {
@@ -106,15 +111,16 @@ async function sendCompliment(chatId) {
     }, 3600000)
 }
 
+parseStickersProg().catch(err => {if (err) throw err})
+parseCompliments(devId).catch(err => {if (err) throw err})
+parseCompliments(testerId).catch(err => {if (err) throw err})
+parseCompliments(userId).catch(err => {if (err) throw err})
+
 async function forDev(text, msg) {
     if (text === '/start' && !flag) {
         await bot.sendMessage(devId, `Привет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
         flag = !flag
-        await parseStickersProg()
-        await parseCompliments(devId)
-        await parseCompliments(testerId)
-        await parseCompliments(userId)
     }
     else if (text === '/start' && flag) {
         await bot.sendMessage(devId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
