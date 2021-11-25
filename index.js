@@ -50,8 +50,8 @@ const parseCompliments = async (chatId) => {
     }
     await sendCompliment(chatId)
 }
-await parseCompliments(devId)
-await parseCompliments(userId)
+parseCompliments(devId).catch(err => {console.log(err)})
+parseCompliments(userId).catch(err => {console.log(err)})
 
 const parseStickersProg = async () => {
     const getHTML = async (url) => {
