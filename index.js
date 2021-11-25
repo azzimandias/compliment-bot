@@ -79,7 +79,7 @@ async function sendCompliment(chatId) {
         else if (i >= 1040) {
             clearInterval(interval)
         }
-    }, 60000)
+    }, 3600000)
 }
 
 function randomInteger(min, max) {
