@@ -47,7 +47,7 @@ const parseCompliments = async (chatId) => {
             //fs.appendFileSync('./data.txt', `${title}\n`)
             compliments.push(title)
         })
-        console.log(compliments)
+        console.log(compliments[0])
     }
     //await createCompliments()
     await sendCompliment(chatId)
