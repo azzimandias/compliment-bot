@@ -1,9 +1,10 @@
 const TelegramApi = require('node-telegram-bot-api')
 const axios = require('axios')
 const cheerio = require('cheerio')
-const fs = require('fs')
-const path = require('path');
-const token = '2100773545:AAFSmLwDreLWc_izYjgaambSSUvLwmWwqds'
+require('dotenv').config()
+const token = process.env.BOT_TOKEN
+const devId = process.env.DEV_ID
+const userId = process.env.USER_ID
 const bot = new TelegramApi(token, {polling: true})
 const ver = '1.0.0'
 const progStickersArray = [
@@ -31,7 +32,7 @@ const errorPhrases = [
 const compliments = []
 
 let flag = false
-let i = 0
+let i = 1
 
 const parseCompliments = async (chatId) => {
     const getHTML = async (url) => {
@@ -44,13 +45,13 @@ const parseCompliments = async (chatId) => {
         const selector = await getHTML(`http://kompli.me/komplimenty-lyubimoj/page/${i}`)
         selector('.post-card__title').each((i, element) => {
             const title = selector(element).find('a').text()
-            //fs.appendFileSync('./data.txt', `${title}\n`)
             compliments.push(title)
         })
     }
-    //await createCompliments()
     await sendCompliment(chatId)
 }
+await parseCompliments(devId)
+await parseCompliments(userId)
 
 const parseStickersProg = async () => {
     const getHTML = async (url) => {
@@ -64,19 +65,20 @@ const parseStickersProg = async () => {
     })
 }
 
-function createCompliments() {
-    compliments.push(
-        fs.readFileSync(path.join(__dirname, 'data.txt'), 'utf-8').split('\n')
-    )
-}
-
 const sendCompliment = async (chatId) => {
-
+    let date = new Date();
+    if (date.getHours() === 12 || date.getHours() === 21) {
+        await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
+        i++
+    }
     const interval = setInterval(() => {
         let date = new Date();
         if (date.getHours() === 12 || date.getHours() === 20) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
             i++
+        }
+        else if (i >= 1040) {
+            clearInterval(interval)
         }
     }, 3600000)
 }
@@ -94,12 +96,10 @@ bot.on('message', async msg => {
         await  bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
         flag = !flag
         await parseStickersProg()
-        await parseCompliments(chatId)
     }
     else if (text === '/start' && flag) {
         await bot.sendMessage(chatId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
-        await parseCompliments(chatId)
     }
     else if (text === '/info') {
         await bot.sendMessage(chatId, `@Corgi_In_Love_bot ver:${ver}\nНаведу шороху в твоем тг!\n#informator`);
