@@ -50,8 +50,8 @@ const parseCompliments = async (chatId) => {
     }
     await sendCompliment(chatId)
 }
-parseCompliments(devId).catch(err => {console.log(err)})
-parseCompliments(userId).catch(err => {console.log(err)})
+parseCompliments(process.env.DEV_ID).catch(err => {console.log(err)})
+parseCompliments(process.env.USER_ID).catch(err => {console.log(err)})
 
 const parseStickersProg = async () => {
     const getHTML = async (url) => {
@@ -73,7 +73,7 @@ const sendCompliment = async (chatId) => {
     }
     const interval = setInterval(() => {
         let date = new Date();
-        if (date.getHours() === 12 || date.getHours() === 20) {
+        if (date.getHours() === 12 || date.getHours() === 21) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
             i++
         }
