@@ -45,7 +45,7 @@ const errorPhrases = [
 const compliments = []
 
 let flag = false
-let i = 5
+let i = 6
 let j = 0
 
 
