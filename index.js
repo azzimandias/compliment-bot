@@ -44,7 +44,6 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let flag = false
 let i = 6
 let j = 0
 
@@ -117,18 +116,16 @@ parseCompliments(testerId).catch(err => {if (err) throw err})
 parseCompliments(userId).catch(err => {if (err) throw err})
 
 async function forDev(text, msg) {
-    if (text === '/start' && !flag) {
-        await bot.sendMessage(devId, `Привет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
-        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
-        flag = !flag
-    }
-    else if (text === '/start' && flag) {
+    if (text === '/start') {
         await bot.sendMessage(devId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
     }
     else if (text === '/info') {
         await bot.sendMessage(devId, `@Corgi_In_Love_bot ver:${ver}\nНаведу шороху в твоем тг!\n#informator`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
+    }
+    else if (text.split('\n')[0] === '/send') {
+        await bot.sendMessage(userId, `@azzimandias\n${text.split('\n')[1]}\n#master`);
     }
     else if (text === "/Go") {
         await bot.sendMessage(devId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
@@ -143,18 +140,7 @@ async function forDev(text, msg) {
 }
 
 async function forTester(text, msg) {
-    if (text === '/start' && !flag) {
-        await bot.sendMessage(devId, `FROM TESTER\nПривет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
-        await bot.sendMessage(testerId, `Привет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
-        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
-        await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
-        flag = !flag
-        await parseStickersProg()
-        await parseCompliments(devId)
-        await parseCompliments(testerId)
-        await parseCompliments(userId)
-    }
-    else if (text === '/start' && flag) {
+    if (text === '/start') {
         await bot.sendMessage(devId, `FROM TESTER\n${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await bot.sendMessage(testerId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
@@ -166,12 +152,6 @@ async function forTester(text, msg) {
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
         await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
     }
-    else if (text === "/Go") {
-        await bot.sendMessage(devId, `FROM TESTER\n${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await bot.sendMessage(testerId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
-        await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
-    }
     else {
         await bot.sendMessage(devId, `FROM TESTER\n${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
         await bot.sendMessage(testerId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
@@ -181,14 +161,7 @@ async function forTester(text, msg) {
 }
 
 async function forUser(text, msg) {
-    if (text === '/start' && !flag) {
-        await bot.sendMessage(devId, `FROM USER\nПривет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
-        await bot.sendMessage(userId, `Привет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
-        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
-        await  bot.sendSticker(userId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
-        flag = !flag
-    }
-    else if (text === '/start' && flag) {
+    if (text === '/start') {
         await bot.sendMessage(devId, `FROM USER\n${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await bot.sendMessage(userId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
@@ -199,12 +172,6 @@ async function forUser(text, msg) {
         await bot.sendMessage(userId, `@Corgi_In_Love_bot ver:${ver}\nНаведу шороху в твоем тг!\n#informator`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
         await  bot.sendSticker(userId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
-    }
-    else if (text === "/Go") {
-        await bot.sendMessage(devId, `FROM USER\n${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
-        await  bot.sendSticker(userId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
     }
     else {
         await bot.sendMessage(devId, `FROM USER\n${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
