@@ -64,7 +64,7 @@ const parseStickersProg = async () => {
     })
 }
 
-const sendCompliment = async (chatId) => {
+async function sendCompliment(chatId) {
     let date = new Date();
     if (date.getHours() === 12 || date.getHours() === 23) {
         await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
@@ -119,7 +119,7 @@ async function forDev(text, msg) {
 
 async function forTester(text, msg) {
     if (text === '/start' && !flag) {
-        await bot.sendMessage(devId, `FROM USER\nПривет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
+        await bot.sendMessage(devId, `FROM TESTER\nПривет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
         await bot.sendMessage(testerId, `Привет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
         await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
