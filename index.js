@@ -4,6 +4,7 @@ const cheerio = require('cheerio')
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
 const devId = process.env.DEV_ID
+const testerId = process.env.TESTER_ID
 const userId = process.env.USER_ID
 const bot = new TelegramApi(token, {polling: true})
 const ver = '1.0.0'
@@ -32,7 +33,7 @@ const errorPhrases = [
 const compliments = []
 
 let flag = false
-let i = 3
+let i = 4
 
 const parseCompliments = async (chatId) => {
     const getHTML = async (url) => {
@@ -65,20 +66,20 @@ const parseStickersProg = async () => {
 
 const sendCompliment = async (chatId) => {
     let date = new Date();
-    if (date.getHours() === 12 || date.getHours() === 22) {
+    if (date.getHours() === 12 || date.getHours() === 23) {
         await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
         i++
     }
     const interval = setInterval(() => {
         let date = new Date();
-        if (date.getHours() === 12 || date.getHours() === 22) {
+        if (date.getHours() === 12 || date.getHours() === 23) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
             i++
         }
         else if (i >= 1040) {
             clearInterval(interval)
         }
-    }, 3600000)
+    }, 60000)
 }
 
 function randomInteger(min, max) {
@@ -93,6 +94,7 @@ async function forDev(text, msg) {
         flag = !flag
         await parseStickersProg()
         await parseCompliments(devId)
+        await parseCompliments(testerId)
         await parseCompliments(userId)
     }
     else if (text === '/start' && flag) {
@@ -115,6 +117,44 @@ async function forDev(text, msg) {
     }
 }
 
+async function forTester(text, msg) {
+    if (text === '/start' && !flag) {
+        await bot.sendMessage(devId, `FROM USER\nПривет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
+        await bot.sendMessage(testerId, `Привет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
+        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
+        await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
+        flag = !flag
+        await parseStickersProg()
+        await parseCompliments(devId)
+        await parseCompliments(testerId)
+        await parseCompliments(userId)
+    }
+    else if (text === '/start' && flag) {
+        await bot.sendMessage(devId, `FROM TESTER\n${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
+        await bot.sendMessage(testerId, `${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
+        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
+        await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/33.webp');
+    }
+    else if (text === '/info') {
+        await bot.sendMessage(devId, `FROM TESTER\n@Corgi_In_Love_bot ver:${ver}\nНаведу шороху в твоем тг!\n#informator`);
+        await bot.sendMessage(testerId, `@Corgi_In_Love_bot ver:${ver}\nНаведу шороху в твоем тг!\n#informator`);
+        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
+        await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
+    }
+    else if (text === "/Go") {
+        await bot.sendMessage(devId, `FROM TESTER\n${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
+        await bot.sendMessage(testerId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
+        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
+        await  bot.sendSticker(testerId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
+    }
+    else {
+        await bot.sendMessage(devId, `FROM TESTER\n${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
+        await bot.sendMessage(testerId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
+        await bot.sendSticker(devId, `${progStickersArray[randomInteger(0, 24)]}`)
+        await bot.sendSticker(testerId, `${progStickersArray[randomInteger(0, 24)]}`)
+    }
+}
+
 async function forUser(text, msg) {
     if (text === '/start' && !flag) {
         await bot.sendMessage(devId, `FROM USER\nПривет красавица ${msg.from.first_name}!\nТы моя хозяйка?)\nЯ уже тебя люблю! ❤️❤️❤️\n#purelove`);
@@ -122,9 +162,6 @@ async function forUser(text, msg) {
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
         await  bot.sendSticker(userId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/2.webp');
         flag = !flag
-        await parseStickersProg()
-        await parseCompliments(devId)
-        await parseCompliments(userId)
     }
     else if (text === '/start' && flag) {
         await bot.sendMessage(devId, `FROM USER\n${msg.from.first_name} - ты моя хозяйка!\nЯ тебя люблю! ❤️❤️❤️\n#purelove`);
@@ -157,6 +194,10 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     if (Number(chatId) === Number(devId)) {
         await forDev(text, msg)
+    }
+    else if (Number(chatId) === Number(testerId)) {
+        await  bot.sendMessage(devId, `FROM TESTER\n${text}`)
+        await forTester(text, msg)
     }
     else if (Number(chatId) === Number(userId)) {
         await  bot.sendMessage(devId, `FROM USER\n${text}`)
