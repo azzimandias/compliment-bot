@@ -75,7 +75,7 @@ const sendCompliment = async (chatId) => {
     const interval = setInterval(() => {
         let date = new Date();
         if (date.getHours() === 12 || date.getHours() === 20) {
-            bot.sendMessage(chatId, `${compliments[0][i]}\n❤️💫💘❤️‍🔥\n#compliment`);
+            bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
             i++
         }
     }, 3600000)
