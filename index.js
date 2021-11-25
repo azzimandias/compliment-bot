@@ -34,6 +34,7 @@ const compliments = []
 
 let flag = false
 let i = 4
+let j = 0
 
 const parseCompliments = async (chatId) => {
     const getHTML = async (url) => {
@@ -66,15 +67,18 @@ const parseStickersProg = async () => {
 
 async function sendCompliment(chatId) {
     let date = new Date();
-    if (date.getHours() === 12 || date.getHours() === 20) {
+    if (date.getHours() === 9 || date.getHours() === 20) {
         await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        i++
+        j++
     }
     const interval = setInterval(() => {
+        if (j === 3) {
+            j = 0
+        }
         let date = new Date();
-        if (date.getHours() === 12 || date.getHours() === 20) {
+        if (date.getHours() === 9 || date.getHours() === 17) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-            i++
+            j++
         }
         else if (i >= 1040) {
             clearInterval(interval)
