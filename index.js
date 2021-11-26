@@ -52,10 +52,10 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 6
+let i = 7
 let j = 3
-let x = 0
-let y = 0
+/*let x = 0
+let y = 0*/
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -104,6 +104,7 @@ const parseCorgisPhotos = async () => {
 }
 
 async function sendCompliment(chatId) {
+    await bot.sendMessage(devId, `Deploy success`);
     switch (Number(chatId)) {
         case Number(devId):
             await bot.sendMessage(devId, `Dev YES`);
@@ -115,6 +116,18 @@ async function sendCompliment(chatId) {
             await bot.sendMessage(devId, `User YES`);
             break
     }
+    if (j === 3) {
+        j = 0
+        i++
+    }
+    await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    if (randomInteger(0, 9) > 4) {
+        await bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+    }
+    else {
+        await bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+    }
+    j++
     const complimentInterval = setInterval(() => {
         if (j === 3) {
             j = 0
@@ -122,8 +135,13 @@ async function sendCompliment(chatId) {
         }
         let date = new Date();
         if (date.getHours() === 9 || date.getHours() === 17) {
-            bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-            bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+            bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+            if (randomInteger(0, 9) > 4) {
+                bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+            }
+            else {
+                bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+            }
             j++
         }
         else if (i >= 1040) {
@@ -135,12 +153,12 @@ async function sendCompliment(chatId) {
             y = 0
             x++
         }
-        if (x >= 15000) {
+        if (x >= 24) {
             clearInterval(corgiPhotosInterval);
-        }*/
-    await bot.sendPhoto(devId, `${corgiPhotosArray[x]}`);
-        //y++;
-    //}, 10000);
+        }
+        bot.sendPhoto(chatId, `${corgiPhotosArray[x]}`);
+        y++;
+    }, 14400000);*/
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
