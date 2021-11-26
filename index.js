@@ -98,11 +98,11 @@ const parseCorgisPhotos = async () => {
         return cheerio.load(data)
     }
     const selector = await getHTML(`https://pixabay.com/ru/images/search/корги/`)
-    selector('.link--h3bPW').each((i, element) => {
+    selector('.Collection-Item').each((i, element) => {
         const imges = selector(element).find('img').attr('src')
+        console.log(imges)
         corgiPhotosArray.push(`${imges}`)
     })
-    console.log(selector.text())
 }
 
 async function sendCompliment(chatId) {
