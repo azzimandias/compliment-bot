@@ -98,7 +98,7 @@ const parseCorgisPhotos = async () => {
         return cheerio.load(data)
     }
     const selector = await getHTML(`https://www.pinterest.ru/search/pins/?rs=ac&len=2&q=corgi&eq=corgi`)
-    selector('.Collection-Item').each((i, element) => {
+    selector('div.Collection-Item').each((i, element) => {
         const imges = selector(element).find('img').attr('src')
         console.log(imges)
         corgiPhotosArray.push(`${imges}`)
