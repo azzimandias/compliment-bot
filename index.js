@@ -1,6 +1,7 @@
 const TelegramApi = require('node-telegram-bot-api')
 const axios = require('axios')
 const cheerio = require('cheerio')
+const fs = require('fs')
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
 const devId = process.env.DEV_ID
@@ -9,32 +10,38 @@ const userId = process.env.USER_ID
 const bot = new TelegramApi(token, {polling: true})
 const ver = '1.0.0'
 const progStickersArray = [
-    'https://cdndelivr.com/stickerset/codebark/12/webp',
-    'https://cdndelivr.com/stickerset/codebark/13/webp',
-    'https://cdndelivr.com/stickerset/codebark/14/webp',
-    'https://cdndelivr.com/stickerset/codebark/15/webp',
-    'https://cdndelivr.com/stickerset/codebark/16/webp',
-    'https://cdndelivr.com/stickerset/codebark/17/webp',
-    'https://cdndelivr.com/stickerset/codebark/18/webp',
-    'https://cdndelivr.com/stickerset/codebark/19/webp',
-    'https://cdndelivr.com/stickerset/codebark/20/webp',
-    'https://cdndelivr.com/stickerset/codebark/21/webp',
-    'https://cdndelivr.com/stickerset/codebark/22/webp',
-    'https://cdndelivr.com/stickerset/codebark/23/webp',
-    'https://cdndelivr.com/stickerset/codebark/24/webp',
+    "https://cdndelivr.com/stickerset/codebark/12/webp",
+    "https://cdndelivr.com/stickerset/codebark/13/webp",
+    "https://cdndelivr.com/stickerset/codebark/14/webp",
+    "https://cdndelivr.com/stickerset/codebark/15/webp",
+    "https://cdndelivr.com/stickerset/codebark/16/webp",
+    "https://cdndelivr.com/stickerset/codebark/17/webp",
+    "https://cdndelivr.com/stickerset/codebark/18/webp",
+    "https://cdndelivr.com/stickerset/codebark/19/webp",
+    "https://cdndelivr.com/stickerset/codebark/20/webp",
+    "https://cdndelivr.com/stickerset/codebark/21/webp",
+    "https://cdndelivr.com/stickerset/codebark/22/webp",
+    "https://cdndelivr.com/stickerset/codebark/23/webp",
+    "https://cdndelivr.com/stickerset/codebark/24/webp"
 ]
+/*progStickersArray.push(
+    fs.readFileSync('./progStickersArray.json', 'utf-8')
+)*/
 const cuteStickersArray = [
-    'https://cdndelivr.com/stickerset/blimchik_vk/7/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/6/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/8/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/19/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/20/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/24/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/27/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/32/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/33/webp',
-    'https://cdndelivr.com/stickerset/blimchik_vk/11/webp'
+    "https://cdndelivr.com/stickerset/blimchik_vk/7/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/6/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/8/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/19/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/20/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/24/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/27/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/32/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/33/webp",
+    "https://cdndelivr.com/stickerset/blimchik_vk/11/webp"
 ]
+/*cuteStickersArray.push(
+    fs.readFileSync('./cuteStickersArray.json', 'utf-8')
+)*/
 const errorPhrases = [
     'Я еще не достаточно надрессирован чтобы что-то отвечать!! 🦴',
     'Гав-гав 🐕',
@@ -46,7 +53,6 @@ const compliments = []
 
 let i = 6
 let j = 0
-
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -97,6 +103,7 @@ async function sendCompliment(chatId) {
     const interval = setInterval(() => {
         if (j === 3) {
             j = 0
+            i++
         }
         let date = new Date();
         if (date.getHours() === 9 || date.getHours() === 17) {
