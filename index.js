@@ -138,7 +138,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }
-        bot.sendPhoto(devId, `${corgiPhotosArray[x]}`);
+        bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
         y++;
     }, 1000);
 }
