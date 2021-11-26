@@ -100,7 +100,7 @@ const parseCorgisPhotos = async () => {
     selector('div.serp-item').each((i, element) => {
         const img = selector(element).find('img').attr('src')
         //console.log(img)
-        corgiPhotosArray.push(`https${img}`)
+        corgiPhotosArray.push(`https${img}.png`)
     })
 }
 
