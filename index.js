@@ -138,9 +138,9 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }
-        bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
+        bot.sendMessage(devId, `${corgiPhotosArray}`);
         y++;
-    }, 1000);
+    }, 60000);
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
