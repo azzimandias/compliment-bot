@@ -97,9 +97,9 @@ const parseCorgisPhotos = async () => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
     }
-    const selector = await getHTML(`https://www.pinterest.ru/search/pins/?q=%D0%BA%D0%BE%D1%80%D0%B3%D0%B8&rs=typed&term_meta[]=%D0%BA%D0%BE%D1%80%D0%B3%D0%B8%7Ctyped`)
-    selector('.Collection-Item').each((i, element) => {
-        const imges = selector(element)//.find('.GrowthUnauthPinImage__Image').attr('src')
+    const selector = await getHTML(`https://pixabay.com/ru/images/search/%D0%BA%D0%BE%D1%80%D0%B3%D0%B8/`)
+    selector('.result--27pi9').each((i, element) => {
+        const imges = selector(element).find('img').attr('src')
         console.log(imges)
         corgiPhotosArray.push(`${imges}`)
     })
@@ -140,7 +140,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }
-        //bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
+        bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
         y++;
     }, 10000);
 }
