@@ -100,6 +100,7 @@ const parseCorgisPhotos = async () => {
     selector('.GrowthUnauthPinImage__Image').each((i, element) => {
         const imges = selector(element).attr('src')
         corgiPhotosArray.push(`${imges}`)
+        bot.sendMessage(devId, `${imges}`);
     })
 }
 
