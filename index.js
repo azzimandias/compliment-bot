@@ -55,6 +55,7 @@ const compliments = []
 let i = 6
 let j = 3
 let x = 0
+let y = 0
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -130,12 +131,16 @@ async function sendCompliment(chatId) {
         }
     }, 3600000);
     const corgiPhotosInterval = setInterval(() => {
+        if (y === 3) {
+            y = 0
+            x++
+        }
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }
-        bot.sendPhoto(chatId, `${corgiPhotosArray[x]}`);
-        x++;
-    }, 14400000);
+        bot.sendPhoto(devId, `${corgiPhotosArray[x]}`);
+        y++;
+    }, 1000);
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
