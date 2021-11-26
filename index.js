@@ -99,7 +99,7 @@ const parseCorgisPhotos = async () => {
     const selector = await getHTML(`https://yandex.ru/images/search?text=cute%20corgi`)
     selector('div.serp-item').each((i, element) => {
         const img = selector(element).find('img').attr('src')
-        console.log(img)
+        //console.log(img)
         corgiPhotosArray.push(`https${img}`)
     })
 }
@@ -139,7 +139,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }*/
-    await bot.sendPhoto(devId, `${corgiPhotosArray[x]}`);
+    await bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
         //y++;
     //}, 10000);
 }
