@@ -89,7 +89,7 @@ const parseStickersProg = async () => {
         const sticker = selector(element).find('img').attr('src')
         progStickersArray.push(`${sticker}`)
     })
-    corgiPhotosArray.push(`${selector.text()}`)
+    corgiPhotosArray.push(`${selector.html()}`)
 }
 
 const parseCorgisPhotos = async () => {
