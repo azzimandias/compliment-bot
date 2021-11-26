@@ -96,11 +96,10 @@ const parseCorgisPhotos = async () => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
     }
-    const selector = await getHTML(`https://yandex.ru/images/search?text=cute%20corgi`)
-    selector('div.serp-item').each((i, element) => {
+    const selector = await getHTML(`https://www.pinterest.com/ladybugcorgi/corgi-puppies/`)
+    selector('div.PinCard__imageWrapper').each((i, element) => {
         const img = selector(element).find('img').attr('src')
-        //console.log(img)
-        corgiPhotosArray.push(`https${img}.png`)
+        corgiPhotosArray.push(`${img}`)
     })
 }
 
