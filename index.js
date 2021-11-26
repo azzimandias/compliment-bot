@@ -129,13 +129,13 @@ async function sendCompliment(chatId) {
             clearInterval(complimentInterval)
         }
     }, 3600000);
-    //const corgiPhotosInterval = setInterval(() => {
-        /*if (x >= 15000) {
+    const corgiPhotosInterval = setInterval(() => {
+        if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
-        }*/
-        await bot.sendPhoto(chatId, `${corgiPhotosArray[x]}`);
+        }
+        bot.sendPhoto(chatId, `${corgiPhotosArray[x]}`);
         x++;
-   // }, 14400000);
+    }, 14400000);
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
