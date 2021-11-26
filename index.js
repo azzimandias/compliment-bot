@@ -27,6 +27,7 @@ const progStickersArray = [
 /*progStickersArray.push(
     fs.readFileSync('./progStickersArray.json', 'utf-8')
 )*/
+const corgiPhotosArray = []
 const cuteStickersArray = [
     "https://cdndelivr.com/stickerset/blimchik_vk/7/webp",
     "https://cdndelivr.com/stickerset/blimchik_vk/6/webp",
@@ -52,7 +53,8 @@ const errorPhrases = [
 const compliments = []
 
 let i = 6
-let j = 0
+let j = 3
+let x = 0
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -88,6 +90,18 @@ const parseStickersProg = async () => {
     })
 }
 
+const parseCorgisPhotos = async () => {
+    const getHTML = async (url) => {
+        const {data} = await axios.get(url)
+        return cheerio.load(data)
+    }
+    const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
+    selector('.Collection-Item').each((i, element) => {
+        const sticker = selector(element).find('img').attr('src')
+        corgiPhotosArray.push(`${sticker}`)
+    })
+}
+
 async function sendCompliment(chatId) {
     switch (Number(chatId)) {
         case Number(devId):
@@ -100,7 +114,7 @@ async function sendCompliment(chatId) {
             await bot.sendMessage(devId, `User YES`);
             break
     }
-    const interval = setInterval(() => {
+    const complimentInterval = setInterval(() => {
         if (j === 3) {
             j = 0
             i++
@@ -112,12 +126,20 @@ async function sendCompliment(chatId) {
             j++
         }
         else if (i >= 1040) {
-            clearInterval(interval)
+            clearInterval(complimentInterval)
         }
-    }, 3600000)
+    }, 3600000);
+    //const corgiPhotosInterval = setInterval(() => {
+        /*if (x >= 15000) {
+            clearInterval(corgiPhotosInterval);
+        }*/
+        await bot.sendPhoto(chatId, `${corgiPhotosArray[x]}`);
+        x++;
+   // }, 14400000);
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
+parseCorgisPhotos().catch(err => {if (err) throw err})
 parseCompliments(devId).catch(err => {if (err) throw err})
 parseCompliments(testerId).catch(err => {if (err) throw err})
 parseCompliments(userId).catch(err => {if (err) throw err})
