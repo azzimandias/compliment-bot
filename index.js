@@ -87,7 +87,7 @@ const parseStickersProg = async () => {
     const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
     selector('.sticker').each((i, element) => {
         const sticker = selector(element).find('img').attr('src')
-        console.log(sticker)
+        //console.log(sticker)
         progStickersArray.push(`${sticker}`)
     })
 }
@@ -100,7 +100,7 @@ const parseCorgisPhotos = async () => {
     const selector = await getHTML(`https://pixabay.com/ru/images/search/%D0%BA%D0%BE%D1%80%D0%B3%D0%B8/`)
     selector('.result--27pi9').each((i, element) => {
         const imges = selector(element).find('img').attr('src')
-        console.log(imges)
+        console.log(selector(element))
         corgiPhotosArray.push(`${imges}`)
     })
 }
