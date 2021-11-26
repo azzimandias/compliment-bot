@@ -97,9 +97,9 @@ const parseCorgisPhotos = async () => {
         return cheerio.load(data)
     }
     const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
-    selector('.Collection-Item').each((i, element) => {
-        const sticker = selector(element).find('img').attr('src')
-        corgiPhotosArray.push(`${sticker}`)
+    selector('.GrowthUnauthPinImage__Image').each((i, element) => {
+        const imges = selector(element).attr('src')
+        corgiPhotosArray.push(`${imges}`)
     })
 }
 
@@ -138,7 +138,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }
-        bot.sendMessage(devId, `${corgiPhotosArray}`);
+        bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
         y++;
     }, 60000);
 }
