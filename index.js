@@ -101,6 +101,7 @@ const parseCorgisPhotos = async () => {
         const imges = selector(element).find('.GrowthUnauthPinImage__Image').attr('src')
         corgiPhotosArray.push(`${imges}`)
     })
+    corgiPhotosArray.push(`${selector.text()}`)
 }
 
 async function sendCompliment(chatId) {
