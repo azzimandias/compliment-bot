@@ -96,7 +96,7 @@ const parseCorgisPhotos = async () => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
     }
-    const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
+    const selector = await getHTML(`https://www.pinterest.ru/search/pins/?q=%D0%BA%D0%BE%D1%80%D0%B3%D0%B8&rs=typed&term_meta[]=%D0%BA%D0%BE%D1%80%D0%B3%D0%B8%7Ctyped`)
     selector('.GrowthUnauthPinImage__Image').each((i, element) => {
         const imges = selector(element).attr('src')
         corgiPhotosArray.push(`${imges}`)
