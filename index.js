@@ -100,7 +100,7 @@ const parseCorgisPhotos = async () => {
     selector('div.serp-item').each((i, element) => {
         const img = selector(element).find('img').attr('src')
         console.log(img)
-        corgiPhotosArray.push(`${img}`)
+        corgiPhotosArray.push(`https${img}`)
     })
 }
 
@@ -139,7 +139,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }*/
-    await bot.sendPhoto(devId, `${corgiPhotosArray[x]}.png`);
+    await bot.sendPhoto(devId, `${corgiPhotosArray[x]}`);
         //y++;
     //}, 10000);
 }
