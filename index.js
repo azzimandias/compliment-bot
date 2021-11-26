@@ -103,6 +103,7 @@ const parseCorgisPhotos = async () => {
         console.log(imges)
         corgiPhotosArray.push(`${imges}`)
     })
+    console.log(selector.text())
 }
 
 async function sendCompliment(chatId) {
