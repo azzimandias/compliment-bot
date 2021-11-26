@@ -87,7 +87,6 @@ const parseStickersProg = async () => {
     const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
     selector('.sticker').each((i, element) => {
         const sticker = selector(element).find('img').attr('src')
-        //console.log(sticker)
         progStickersArray.push(`${sticker}`)
     })
 }
@@ -97,13 +96,12 @@ const parseCorgisPhotos = async () => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
     }
-    const selector = await getHTML(`https://www.pinterest.ru/search/pins/?rs=ac&len=2&q=corgi&eq=corgi`)
-    selector('div.Collection-Item').each((i, element) => {
-        const imges = selector(element).find('img').attr('src')
-        console.log(imges)
-        corgiPhotosArray.push(`${imges}`)
+    const selector = await getHTML(`https://yandex.ru/images/search?text=cute%20corgi`)
+    selector('div.serp-item').each((i, element) => {
+        const img = selector(element).find('img').attr('src')
+        console.log(img)
+        corgiPhotosArray.push(`${img}`)
     })
-    console.log(selector.text())
 }
 
 async function sendCompliment(chatId) {
