@@ -89,7 +89,7 @@ const parseStickersProg = async () => {
         const sticker = selector(element).find('img').attr('src')
         progStickersArray.push(`${sticker}`)
     })
-    corgiPhotosArray.push(`${selector}`)
+    //corgiPhotosArray.push(`${selector}`)
 }
 
 const parseCorgisPhotos = async () => {
@@ -102,7 +102,8 @@ const parseCorgisPhotos = async () => {
         const imges = selector(element).find('.GrowthUnauthPinImage__Image').attr('src')
         corgiPhotosArray.push(`${imges}`)
     })
-    //corgiPhotosArray.push(`${selector.text()}`)
+    corgiPhotosArray.push(`${selector}`)
+    await bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
 }
 
 async function sendCompliment(chatId) {
@@ -140,7 +141,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }
-        bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
+        //bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
         y++;
     }, 10000);
 }
