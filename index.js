@@ -98,7 +98,7 @@ const parseCorgisPhotos = async () => {
         return cheerio.load(data)
     }
     const selector = await getHTML(`https://pixabay.com/ru/images/search/%D0%BA%D0%BE%D1%80%D0%B3%D0%B8/`)
-    selector('.result--27pi9').each((i, element) => {
+    selector('.link--h3bPW').each((i, element) => {
         const imges = selector(element).find('img').attr('src')
         console.log(selector(element))
         corgiPhotosArray.push(`${imges}`)
