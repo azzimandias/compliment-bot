@@ -97,7 +97,7 @@ const parseCorgisPhotos = async () => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
     }
-    const selector = await getHTML(`https://www.pinterest.ru/search/pins/?rs=ac&len=2&q=corgi&eq=corgi&etslf=10610&term_meta[]=corgi%7Cautocomplete%7C1`)
+    const selector = await getHTML(`https://www.pinterest.ru/search/pins/?rs=ac&len=2&q=corgi&eq=corgi`)
     selector('.Collection-Item').each((i, element) => {
         const imges = selector(element).find('img').attr('src')
         console.log(imges)
@@ -140,7 +140,7 @@ async function sendCompliment(chatId) {
         if (x >= 15000) {
             clearInterval(corgiPhotosInterval);
         }*/
-        await bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
+    await bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
         //y++;
     //}, 10000);
 }
