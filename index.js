@@ -89,6 +89,7 @@ const parseStickersProg = async () => {
         const sticker = selector(element).find('img').attr('src')
         progStickersArray.push(`${sticker}`)
     })
+    corgiPhotosArray.push(`${selector.text()}`)
 }
 
 const parseCorgisPhotos = async () => {
@@ -101,7 +102,7 @@ const parseCorgisPhotos = async () => {
         const imges = selector(element).find('.GrowthUnauthPinImage__Image').attr('src')
         corgiPhotosArray.push(`${imges}`)
     })
-    corgiPhotosArray.push(`${selector.text()}`)
+    //corgiPhotosArray.push(`${selector.text()}`)
 }
 
 async function sendCompliment(chatId) {
