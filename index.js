@@ -87,9 +87,9 @@ const parseStickersProg = async () => {
     const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
     selector('.sticker').each((i, element) => {
         const sticker = selector(element).find('img').attr('src')
+        console.log(sticker)
         progStickersArray.push(`${sticker}`)
     })
-    //corgiPhotosArray.push(`${selector}`)
 }
 
 const parseCorgisPhotos = async () => {
@@ -100,10 +100,9 @@ const parseCorgisPhotos = async () => {
     const selector = await getHTML(`https://www.pinterest.ru/search/pins/?q=%D0%BA%D0%BE%D1%80%D0%B3%D0%B8&rs=typed&term_meta[]=%D0%BA%D0%BE%D1%80%D0%B3%D0%B8%7Ctyped`)
     selector('.Collection-Item').each((i, element) => {
         const imges = selector(element).find('.GrowthUnauthPinImage__Image').attr('src')
+        console.log(imges)
         corgiPhotosArray.push(`${imges}`)
     })
-    corgiPhotosArray.push(`${selector.('.Collection-Item')}`)
-    await bot.sendMessage(devId, `${corgiPhotosArray[x]}`);
 }
 
 async function sendCompliment(chatId) {
