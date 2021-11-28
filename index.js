@@ -165,6 +165,17 @@ async function sendCompliment(chatId) {
     }, 14400000);*/
 }
 
+async function sendComplimentForce() {
+    await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    if (randomInteger(0, 9) > 4) {
+        await bot.sendSticker(userId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+    }
+    else {
+        await bot.sendPhoto(userId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+    }
+    j++
+}
+
 parseStickersProg().catch(err => {if (err) throw err})
 parseCorgisPhotos().catch(err => {if (err) throw err})
 parseCompliments(devId).catch(err => {if (err) throw err})
@@ -188,6 +199,9 @@ async function forDev(text, msg) {
         await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
         await  bot.sendSticker(userId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
+    }
+    else if (text === '/comp') {
+        await sendComplimentForce();
     }
     else {
         await bot.sendMessage(devId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
