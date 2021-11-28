@@ -116,9 +116,12 @@ async function sendCompliment(chatId) {
             await bot.sendMessage(devId, `User YES`);
             break
     }
-    if (j === 3) {
+    let file = fs.readFileSync('./complements.txt')
+    file = file.split('\n')
+    /*if (j === 3) {
         j = 0
-        i++
+        i = file[file.length - 1] + 1
+        file.push(i)
     }
     await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
     if (randomInteger(0, 9) > 4) {
@@ -127,10 +130,11 @@ async function sendCompliment(chatId) {
     else {
         await bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
     }
-    j++
+    j++*/
     const complimentInterval = setInterval(() => {
         if (j === 3) {
             j = 0
+            //i = file[file.length - 1] + 1
             i++
         }
         let date = new Date();
