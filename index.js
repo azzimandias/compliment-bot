@@ -52,7 +52,7 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 7
+let i = 11
 let j = 3
 /*let x = 0
 let y = 0*/
