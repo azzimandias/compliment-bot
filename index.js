@@ -58,8 +58,6 @@ let currentDate = 0
 let firstCompTime = 0
 let secondCompTime = 0
 let fir = false
-/*let x = 0
-let y = 0*/
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -159,24 +157,13 @@ async function sendCompliment(chatId) {
         else {
             currentDate = date.getDate()
             firstCompTime = randomInteger(7, 23)
-            console.log(firstCompTime)
+            bot.sendMessage(devId, `First - ${firstCompTime}`)
             while(secondCompTime < firstCompTime) {
                 secondCompTime = randomInteger(7, 23)
-                console.log(secondCompTime)
+                bot.sendMessage(devId, `Second - ${secondCompTime}`)
             }
         }
     }, 60000);
-    /*const corgiPhotosInterval = setInterval(() => {
-        if (y === 3) {
-            y = 0
-            x++
-        }
-        if (x >= 24) {
-            clearInterval(corgiPhotosInterval);
-        }
-        bot.sendPhoto(chatId, `${corgiPhotosArray[x]}`);
-        y++;
-    }, 14400000);*/
 }
 
 async function sendComplimentForce() {
