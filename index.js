@@ -159,8 +159,10 @@ async function sendCompliment(chatId) {
         else {
             currentDate = date.getDate()
             firstCompTime = randomInteger(1, 23)
+            console.log(firstCompTime)
             while(secondCompTime < firstCompTime) {
                 secondCompTime = randomInteger(1, 23)
+                console.log(secondCompTime)
             }
         }
     }, 60000);
