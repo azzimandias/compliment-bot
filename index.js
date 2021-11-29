@@ -156,7 +156,7 @@ async function sendCompliment(chatId) {
         }
         else {
             currentDate = date.getDate()
-            firstCompTime = randomInteger(7, 23)
+            firstCompTime = randomInteger(7, 22)
             bot.sendMessage(devId, `First - ${firstCompTime}`)
             while(secondCompTime < firstCompTime) {
                 secondCompTime = randomInteger(7, 23)
