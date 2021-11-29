@@ -138,7 +138,7 @@ async function sendCompliment(chatId) {
             i++
         }
         let date = new Date();
-        if (date.getHours() === 10 || date.getHours() === 17) {
+        //if (date.getHours() === 10 || date.getHours() === 17) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
             if (randomInteger(0, 9) > 4) {
                 bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
@@ -147,10 +147,10 @@ async function sendCompliment(chatId) {
                 bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
             }
             j++
-        }
-        else if (i >= 1040) {
+        //}
+        /*else if (i >= 1040) {
             clearInterval(complimentInterval)
-        }
+        }*/
     }, 10000); //3600000
     /*const corgiPhotosInterval = setInterval(() => {
         if (y === 3) {
