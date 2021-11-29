@@ -57,6 +57,7 @@ let j = 3
 let currentDate = 0
 let firstCompTime = 0
 let secondCompTime = 0
+let fir = false
 /*let x = 0
 let y = 0*/
 
@@ -124,9 +125,10 @@ async function sendCompliment(chatId) {
         if (i >= 1040) {
             clearInterval(complimentInterval)
         } else if (date.getDate() === currentDate) {
-            if (date.getHours() === firstCompTime || date.getHours() === secondCompTime) {
+            if (date.getHours() === firstCompTime && !fir) {
                 if (j === 3) {
                     j = 0
+                    fir = !fir
                     i++
                 }
                 bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
@@ -138,15 +140,30 @@ async function sendCompliment(chatId) {
                 }
                 j++
             }
-        } else {
+            else if (date.getHours() === secondCompTime && fir) {
+                if (j === 3) {
+                    j = 0
+                    fir = !fir
+                    i++
+                }
+                bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+                if (randomInteger(0, 9) > 4) {
+                    bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+                }
+                else {
+                    bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+                }
+                j++
+            }
+        }
+        else {
             currentDate = date.getDate()
             firstCompTime = randomInteger(1, 23)
-            secondCompTime = randomInteger(1, 23)
-            if (firstCompTime === secondCompTime) {
+            while(secondCompTime < firstCompTime) {
                 secondCompTime = randomInteger(1, 23)
             }
         }
-    }, 1000);
+    }, 60000);
     /*const corgiPhotosInterval = setInterval(() => {
         if (y === 3) {
             y = 0
