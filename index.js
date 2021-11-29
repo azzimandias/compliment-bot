@@ -117,7 +117,7 @@ async function sendCompliment(chatId) {
             break
     }
     let file = fs.readFileSync('./complements.txt')
-    file = file.split('\n')
+    //file = file.split('\n')
     /*if (j === 3) {
         j = 0
         i = file[file.length - 1] + 1
@@ -171,12 +171,12 @@ async function sendComplimentForce() {
         //i = file[file.length - 1] + 1
         i++
     }
-    await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    await bot.sendMessage(devId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
     if (randomInteger(0, 9) > 4) {
-        await bot.sendSticker(userId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+        await bot.sendSticker(devId, `${cuteStickersArray[randomInteger(0, 9)]}`)
     }
     else {
-        await bot.sendPhoto(userId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+        await bot.sendPhoto(devId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
     }
 }
 
