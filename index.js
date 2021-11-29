@@ -138,7 +138,7 @@ async function sendCompliment(chatId) {
             i++
         }
         let date = new Date();
-        //if (date.getHours() === 10 || date.getHours() === 17) {
+        if (date.getHours() === 10 || date.getHours() === 17) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
             if (randomInteger(0, 9) > 4) {
                 bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
@@ -147,11 +147,11 @@ async function sendCompliment(chatId) {
                 bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
             }
             j++
-        //}
-        /*else if (i >= 1040) {
+        }
+        else if (i >= 1040) {
             clearInterval(complimentInterval)
-        }*/
-    }, 10000); //3600000
+        }
+    }, 3600000);
     /*const corgiPhotosInterval = setInterval(() => {
         if (y === 3) {
             y = 0
@@ -171,12 +171,12 @@ async function sendComplimentForce() {
         //i = file[file.length - 1] + 1
         i++
     }
-    await bot.sendMessage(devId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
     if (randomInteger(0, 9) > 4) {
-        await bot.sendSticker(devId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+        await bot.sendSticker(userId, `${cuteStickersArray[randomInteger(0, 9)]}`)
     }
     else {
-        await bot.sendPhoto(devId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+        await bot.sendPhoto(userId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
     }
 }
 
