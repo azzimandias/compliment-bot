@@ -58,6 +58,7 @@ let currentDate = 0
 let firstCompTime = 0
 let secondCompTime = 0
 let fir = false
+let sec = false
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -138,10 +139,10 @@ async function sendCompliment(chatId) {
                 }
                 j++
             }
-            else if (date.getHours() === secondCompTime && fir) {
+            else if (date.getHours() === secondCompTime && !sec) {
                 if (j === 3) {
                     j = 0
-                    fir = !fir
+                    sec = !sec
                     i++
                 }
                 bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
@@ -162,6 +163,8 @@ async function sendCompliment(chatId) {
                 secondCompTime = randomInteger(7, 23)
                 bot.sendMessage(devId, `Second - ${secondCompTime + 3}`)
             }
+            fir = false
+            sec = false
         }
     }, 60000);
 }
