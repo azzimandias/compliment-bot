@@ -52,7 +52,7 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 11
+let i = 12
 let j = 3
 /*let x = 0
 let y = 0*/
@@ -138,7 +138,7 @@ async function sendCompliment(chatId) {
             i++
         }
         let date = new Date();
-        if (date.getHours() === 9 || date.getHours() === 17) {
+        if (date.getHours() === 10 || date.getHours() === 17) {
             bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
             if (randomInteger(0, 9) > 4) {
                 bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
@@ -166,6 +166,11 @@ async function sendCompliment(chatId) {
 }
 
 async function sendComplimentForce() {
+    if (j === 3) {
+        j = 0
+        //i = file[file.length - 1] + 1
+        i++
+    }
     await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
     if (randomInteger(0, 9) > 4) {
         await bot.sendSticker(userId, `${cuteStickersArray[randomInteger(0, 9)]}`)
@@ -173,7 +178,6 @@ async function sendComplimentForce() {
     else {
         await bot.sendPhoto(userId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
     }
-    j++
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
