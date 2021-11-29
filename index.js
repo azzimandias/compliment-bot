@@ -52,8 +52,8 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 20
-let j = 3
+let i = 21
+let j = 0
 let currentDate = 0
 let firstCompTime = 0
 let secondCompTime = 0
@@ -157,10 +157,10 @@ async function sendCompliment(chatId) {
         else {
             currentDate = date.getDate()
             firstCompTime = randomInteger(7, 22)
-            bot.sendMessage(devId, `First - ${firstCompTime}`)
+            bot.sendMessage(devId, `First - ${firstCompTime + 3}`)
             while(secondCompTime < firstCompTime) {
                 secondCompTime = randomInteger(7, 23)
-                bot.sendMessage(devId, `Second - ${secondCompTime}`)
+                bot.sendMessage(devId, `Second - ${secondCompTime + 3}`)
             }
         }
     }, 60000);
