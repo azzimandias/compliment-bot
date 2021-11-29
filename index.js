@@ -151,7 +151,7 @@ async function sendCompliment(chatId) {
         else if (i >= 1040) {
             clearInterval(complimentInterval)
         }
-    }, 3600000);
+    }, 10000); //3600000
     /*const corgiPhotosInterval = setInterval(() => {
         if (y === 3) {
             y = 0
