@@ -52,8 +52,11 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 12
+let i = 20
 let j = 3
+let currentDate = 0
+let firstCompTime = 0
+let secondCompTime = 0
 /*let x = 0
 let y = 0*/
 
@@ -116,42 +119,34 @@ async function sendCompliment(chatId) {
             await bot.sendMessage(devId, `User YES`);
             break
     }
-    let file = fs.readFileSync('./complements.txt')
-    //file = file.split('\n')
-    /*if (j === 3) {
-        j = 0
-        i = file[file.length - 1] + 1
-        file.push(i)
-    }
-    await bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
-    if (randomInteger(0, 9) > 4) {
-        await bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
-    }
-    else {
-        await bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
-    }
-    j++*/
     const complimentInterval = setInterval(() => {
-        if (j === 3) {
-            j = 0
-            //i = file[file.length - 1] + 1
-            i++
-        }
         let date = new Date();
-        if (date.getHours() === 10 || date.getHours() === 17) {
-            bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
-            if (randomInteger(0, 9) > 4) {
-                bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
-            }
-            else {
-                bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
-            }
-            j++
-        }
-        else if (i >= 1040) {
+        if (i >= 1040) {
             clearInterval(complimentInterval)
+        } else if (date.getDate() === currentDate) {
+            if (date.getHours() === firstCompTime || date.getHours() === secondCompTime) {
+                if (j === 3) {
+                    j = 0
+                    i++
+                }
+                bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
+                if (randomInteger(0, 9) > 4) {
+                    bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
+                }
+                else {
+                    bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
+                }
+                j++
+            }
+        } else {
+            currentDate = date.getDate()
+            firstCompTime = randomInteger(1, 23)
+            secondCompTime = randomInteger(1, 23)
+            if (firstCompTime === secondCompTime) {
+                secondCompTime = randomInteger(1, 23)
+            }
         }
-    }, 3600000);
+    }, 1000);
     /*const corgiPhotosInterval = setInterval(() => {
         if (y === 3) {
             y = 0
@@ -166,9 +161,8 @@ async function sendCompliment(chatId) {
 }
 
 async function sendComplimentForce() {
-    if (j === 3) {
+    /*if (j === 3) {
         j = 0
-        //i = file[file.length - 1] + 1
         i++
     }
     await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
@@ -177,7 +171,7 @@ async function sendComplimentForce() {
     }
     else {
         await bot.sendPhoto(userId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
-    }
+    }*/
 }
 
 parseStickersProg().catch(err => {if (err) throw err})
