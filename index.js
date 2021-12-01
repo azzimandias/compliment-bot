@@ -52,7 +52,7 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 21
+let i = 27
 let j = 0
 let currentDate = 0
 let firstCompTime = 0
@@ -107,16 +107,15 @@ const parseCorgisPhotos = async () => {
 }
 
 async function sendCompliment(chatId) {
-    await bot.sendMessage(devId, `Deploy success`);
     switch (Number(chatId)) {
         case Number(devId):
-            await bot.sendMessage(devId, `Dev YES`);
+            await bot.sendMessage(devId, `Dev deploy success`);
             break
         case Number(testerId):
-            await bot.sendMessage(devId, `Tester YES`);
+            await bot.sendMessage(devId, `Tester deploy success`);
             break
         case Number(userId):
-            await bot.sendMessage(devId, `User YES`);
+            await bot.sendMessage(devId, `User deploy success`);
             break
     }
     const complimentInterval = setInterval(() => {
@@ -157,11 +156,11 @@ async function sendCompliment(chatId) {
         }
         else {
             currentDate = date.getDate()
-            firstCompTime = randomInteger(7, 22)
+            firstCompTime = randomInteger(7, 21)
             bot.sendMessage(devId, `First - ${firstCompTime + 3}`)
-            secondCompTime = randomInteger(7, 23)
+            secondCompTime = randomInteger(7, 22)
             while(secondCompTime < firstCompTime) {
-                secondCompTime = randomInteger(7, 23)
+                secondCompTime = randomInteger(7, 22)
             }
             bot.sendMessage(devId, `Second - ${secondCompTime + 3}`)
             fir = false
