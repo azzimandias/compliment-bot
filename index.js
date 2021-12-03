@@ -52,7 +52,7 @@ const errorPhrases = [
 ]
 const compliments = []
 
-let i = 27
+let i = 35
 let j = 0
 let currentDate = 0
 let firstCompTime = 0
