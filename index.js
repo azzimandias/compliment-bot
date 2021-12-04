@@ -51,7 +51,6 @@ const errorPhrases = [
     'Не могу ответить, спроси у Андрея'
 ]
 const compliments = []
-
 let i = 35
 let j = 0
 let currentDate = 0
