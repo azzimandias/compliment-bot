@@ -123,6 +123,7 @@ const parseCorgisPhotos = async () => {
 
 async function activateInterval() {
     isSuccess = 'deploy success'
+    console.log('deploy success')
     const complimentInterval = setInterval(() => {
         let date = new Date();
         readCompliments()
