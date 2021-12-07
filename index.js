@@ -147,6 +147,7 @@ async function activateInterval() {
             currentDate = date.getDate()
             firstCompTime = randomInteger(4, 13) + 3
             secondCompTime = randomInteger(14, 20) + 3
+            console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
             sec = false
         }
