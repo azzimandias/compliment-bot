@@ -2,14 +2,15 @@ const TelegramApi = require('node-telegram-bot-api')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const fs = require('fs')
+const path = require('path')
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
 const devId = process.env.DEV_ID
 const testerId = process.env.TESTER_ID
 const userId = process.env.USER_ID
 const bot = new TelegramApi(token, {polling: true})
-const ver = '1.0.0'
-const progStickersArray = [
+const ver = '1.1.0'
+const programmerStickersArray = [
     "https://cdndelivr.com/stickerset/codebark/12/webp",
     "https://cdndelivr.com/stickerset/codebark/13/webp",
     "https://cdndelivr.com/stickerset/codebark/14/webp",
@@ -24,9 +25,7 @@ const progStickersArray = [
     "https://cdndelivr.com/stickerset/codebark/23/webp",
     "https://cdndelivr.com/stickerset/codebark/24/webp"
 ]
-/*progStickersArray.push(
-    fs.readFileSync('./progStickersArray.json', 'utf-8')
-)*/
+
 const corgiPhotosArray = []
 const cuteStickersArray = [
     "https://cdndelivr.com/stickerset/blimchik_vk/7/webp",
@@ -40,9 +39,7 @@ const cuteStickersArray = [
     "https://cdndelivr.com/stickerset/blimchik_vk/33/webp",
     "https://cdndelivr.com/stickerset/blimchik_vk/11/webp"
 ]
-/*cuteStickersArray.push(
-    fs.readFileSync('./cuteStickersArray.json', 'utf-8')
-)*/
+
 const errorPhrases = [
     'Я еще не достаточно надрессирован чтобы что-то отвечать!! 🦴',
     'Гав-гав 🐕',
@@ -51,8 +48,8 @@ const errorPhrases = [
     'Не могу ответить, спроси у Андрея'
 ]
 const compliments = []
-let i = 42
-let j = 0
+let arr = []
+let isSuccess = ''
 let currentDate = 0
 let firstCompTime = 0
 let secondCompTime = 0
@@ -64,7 +61,7 @@ function randomInteger(min, max) {
     return Math.round(rand);
 }
 
-const parseCompliments = async (chatId) => {
+const parseCompliments = async () => {
     const getHTML = async (url) => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
@@ -78,10 +75,29 @@ const parseCompliments = async (chatId) => {
             compliments.push(title)
         })
     }
-    await sendCompliment(chatId)
+    if (!(fs.statSync(path.join(__dirname, 'data', 'compliments.txt'))).size) {
+        mutateCompliments(compliments)
+    }
+    await activateInterval()
 }
 
-const parseStickersProg = async () => {
+function mutateCompliments(array) {
+    fs.writeFile(path.join(__dirname, 'data', 'compliments.txt'), JSON.stringify(array), err => {
+        if (err) console.log(err)
+    })
+}
+
+function readCompliments() {
+    fs.readFile(
+        path.join(__dirname, 'data', 'compliments.txt'),
+        'utf-8',
+        (err, content) => {
+            if (err) console.log(err)
+            arr = JSON.parse(content)}
+    )
+}
+
+const parseStickersProgrammer = async () => {
     const getHTML = async (url) => {
         const {data} = await axios.get(url)
         return cheerio.load(data)
@@ -89,7 +105,7 @@ const parseStickersProg = async () => {
     const selector = await getHTML(`https://telestorm.ru/stickers/codebark`)
     selector('.sticker').each((i, element) => {
         const sticker = selector(element).find('img').attr('src')
-        progStickersArray.push(`${sticker}`)
+        programmerStickersArray.push(`${sticker}`)
     })
 }
 
@@ -105,63 +121,32 @@ const parseCorgisPhotos = async () => {
     })
 }
 
-async function sendCompliment(chatId) {
-    switch (Number(chatId)) {
-        case Number(devId):
-            await bot.sendMessage(devId, `Dev deploy success`);
-            break
-        case Number(testerId):
-            await bot.sendMessage(devId, `Tester deploy success`);
-            break
-        case Number(userId):
-            await bot.sendMessage(devId, `User deploy success`);
-            break
-    }
+async function activateInterval() {
+    isSuccess = 'deploy success'
     const complimentInterval = setInterval(() => {
         let date = new Date();
-        if (i >= 1040) {
+        readCompliments()
+        if (!arr.length) {
             clearInterval(complimentInterval)
-        } else if (date.getDate() === currentDate) {
+        }
+        else if (date.getDate() === currentDate) {
             if (date.getHours() === firstCompTime && !fir) {
-                if (j === 3) {
-                    j = 0
-                    fir = !fir
-                    i++
-                }
-                bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
-                if (randomInteger(0, 9) > 4) {
-                    bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
-                }
-                else {
-                    bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
-                }
-                j++
+                fir = !fir
+                sendCompliment()
+                arr.splice(0, 1);
+                mutateCompliments(arr)
             }
             else if (date.getHours() === secondCompTime && !sec) {
-                if (j === 3) {
-                    j = 0
-                    sec = !sec
-                    i++
-                }
-                bot.sendMessage(chatId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
-                if (randomInteger(0, 9) > 4) {
-                    bot.sendSticker(chatId, `${cuteStickersArray[randomInteger(0, 9)]}`)
-                }
-                else {
-                    bot.sendPhoto(chatId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
-                }
-                j++
+                sec = !sec
+                sendCompliment()
+                arr.splice(0, 1);
+                mutateCompliments(arr)
             }
         }
         else {
             currentDate = date.getDate()
-            firstCompTime = randomInteger(7, 21)
-            bot.sendMessage(devId, `First - ${firstCompTime + 3}`)
-            secondCompTime = randomInteger(7, 22)
-            while(secondCompTime < firstCompTime) {
-                secondCompTime = randomInteger(7, 22)
-            }
-            bot.sendMessage(devId, `Second - ${secondCompTime + 3}`)
+            firstCompTime = randomInteger(4, 13) + 3
+            secondCompTime = randomInteger(14, 20) + 3
             fir = false
             sec = false
         }
@@ -169,24 +154,33 @@ async function sendCompliment(chatId) {
 }
 
 async function sendComplimentForce() {
-    /*if (j === 3) {
-        j = 0
-        i++
-    }
-    await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`)
-    if (randomInteger(0, 9) > 4) {
-        await bot.sendSticker(userId, `${cuteStickersArray[randomInteger(0, 9)]}`)
-    }
-    else {
-        await bot.sendPhoto(userId, `${corgiPhotosArray[randomInteger(0, 24)]}`)
-    }*/
+    readCompliments()
+    await sendCompliment()
+    arr.splice(0, 1);
+    mutateCompliments(arr)
 }
 
-parseStickersProg().catch(err => {if (err) throw err})
+async function sendCompliment() {
+    await bot.sendMessage(devId, `${arr[0]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    await bot.sendMessage(testerId, `${arr[0]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    await bot.sendMessage(userId, `${arr[0]}\n❤️💫💘❤️‍🔥\n#compliment`)
+    if (randomInteger(0, 9) > 4) {
+        let sticker = randomInteger(0, 9)
+        await bot.sendSticker(devId, `${cuteStickersArray[sticker]}`)
+        await bot.sendSticker(testerId, `${cuteStickersArray[sticker]}`)
+        await bot.sendSticker(userId, `${cuteStickersArray[sticker]}`)
+    }
+    else {
+        let photo = randomInteger(0, 24)
+        await bot.sendPhoto(devId, `${corgiPhotosArray[photo]}`)
+        await bot.sendPhoto(testerId, `${corgiPhotosArray[photo]}`)
+        await bot.sendPhoto(userId, `${corgiPhotosArray[photo]}`)
+    }
+}
+
+parseStickersProgrammer().catch(err => {if (err) throw err})
 parseCorgisPhotos().catch(err => {if (err) throw err})
-parseCompliments(devId).catch(err => {if (err) throw err})
-parseCompliments(testerId).catch(err => {if (err) throw err})
-parseCompliments(userId).catch(err => {if (err) throw err})
+parseCompliments().catch(err => {if (err) throw err})
 
 async function forDev(text, msg) {
     if (text === '/start') {
@@ -200,18 +194,15 @@ async function forDev(text, msg) {
     else if (text.split('\n')[0] === '/send' && text.split('\n')[1] !== ' ') {
         await bot.sendMessage(userId, `@azzimandias\n${text.split('\n')[1]}\n#master`);
     }
-    else if (text === "/Go") {
-        await bot.sendMessage(devId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await bot.sendMessage(userId, `${compliments[i]}\n❤️💫💘❤️‍🔥\n#compliment`);
-        await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
-        await  bot.sendSticker(userId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/12.webp');
-    }
     else if (text === '/comp') {
         await sendComplimentForce();
     }
+    else if (text === '/log') {
+        await bot.sendMessage(devId, `Status - ${isSuccess}\nFirst comp - ${firstCompTime}\nSecond comp - ${secondCompTime}\n#log`)
+    }
     else {
         await bot.sendMessage(devId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
-        await bot.sendSticker(devId, `${progStickersArray[randomInteger(0, 24)]}`)
+        await bot.sendSticker(devId, `${programmerStickersArray[randomInteger(0, 24)]}`)
     }
 }
 
@@ -231,8 +222,8 @@ async function forTester(text, msg) {
     else {
         await bot.sendMessage(devId, `FROM TESTER\n${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
         await bot.sendMessage(testerId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
-        await bot.sendSticker(devId, `${progStickersArray[randomInteger(0, 24)]}`)
-        await bot.sendSticker(testerId, `${progStickersArray[randomInteger(0, 24)]}`)
+        await bot.sendSticker(devId, `${programmerStickersArray[randomInteger(0, 24)]}`)
+        await bot.sendSticker(testerId, `${programmerStickersArray[randomInteger(0, 24)]}`)
     }
 }
 
@@ -252,8 +243,8 @@ async function forUser(text, msg) {
     else {
         await bot.sendMessage(devId, `FROM USER\n${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
         await bot.sendMessage(userId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
-        await bot.sendSticker(devId, `${progStickersArray[randomInteger(0, 24)]}`)
-        await bot.sendSticker(userId, `${progStickersArray[randomInteger(0, 24)]}`)
+        await bot.sendSticker(devId, `${programmerStickersArray[randomInteger(0, 24)]}`)
+        await bot.sendSticker(userId, `${programmerStickersArray[randomInteger(0, 24)]}`)
     }
 }
 
