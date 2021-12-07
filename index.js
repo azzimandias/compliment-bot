@@ -127,10 +127,10 @@ async function activateInterval() {
     const complimentInterval = setInterval(() => {
         let date = new Date();
         readCompliments()
-        if (!arr.length) {
+        /*if (!arr.length) {
             clearInterval(complimentInterval)
         }
-        else if (date.getDate() === currentDate) {
+        else*/ if (date.getDate() === currentDate) {
             if (date.getHours() === firstCompTime && !fir) {
                 fir = !fir
                 sendCompliment()
