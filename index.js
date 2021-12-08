@@ -49,7 +49,7 @@ const errorPhrases = [
 ]
 const compliments = []
 let arr = []
-let isSuccess = ''
+let isSuccess = '⛔'
 let currentDate = 0
 let firstCompTime = 0
 let secondCompTime = 0
@@ -122,7 +122,7 @@ const parseCorgisPhotos = async () => {
 }
 
 async function activateInterval() {
-    isSuccess = 'deploy success'
+    isSuccess = '✅'
     console.log('deploy success')
     const complimentInterval = setInterval(() => {
         let date = new Date();
