@@ -126,18 +126,23 @@ async function activateInterval() {
     console.log('deploy success')
     const complimentInterval = setInterval(() => {
         let date = new Date();
+        let datedate = ''
+        if (date.getHours() + 3 === 24)
+            datedate = date.getDate() + 1
+        else
+            datedate = date.getDate()
         readCompliments()
         /*if (!arr.length) {
             clearInterval(complimentInterval)
         }
-        else*/ if (date.getDate() === currentDate) {
-            if (date.getHours() === firstCompTime && !fir) {
+        else*/ if (datedate === currentDate) {
+            if ((date.getHours() + 3) === firstCompTime && !fir) {
                 fir = !fir
                 sendCompliment()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
             }
-            else if (date.getHours() === secondCompTime && !sec) {
+            else if ((date.getHours() + 3) === secondCompTime && !sec) {
                 sec = !sec
                 sendCompliment()
                 arr.splice(0, 1);
@@ -146,8 +151,8 @@ async function activateInterval() {
         }
         else {
             currentDate = date.getDate()
-            firstCompTime = randomInteger(4, 13) + 3
-            secondCompTime = randomInteger(14, 20) + 3
+            firstCompTime = randomInteger(4, 13)
+            secondCompTime = randomInteger(14, 20)
             console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
             sec = false
