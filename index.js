@@ -3,6 +3,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const fs = require('fs')
 const path = require('path')
+const dataBase = require('./dataBase')
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
 const devId = process.env.DEV_ID
@@ -55,6 +56,7 @@ let firstCompTime = 0
 let secondCompTime = 0
 let fir = false
 let sec = false
+let superDate = ''
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -75,6 +77,8 @@ const parseCompliments = async () => {
             compliments.push(title)
         })
     }
+    let comp = await dataBase.setCompliments()
+    await dataBase.getCompliments()
     if (!(fs.statSync(path.join(__dirname, 'data', 'compliments.txt'))).size) {
         mutateCompliments(compliments)
     }
@@ -126,16 +130,15 @@ async function activateInterval() {
     console.log('deploy success')
     const complimentInterval = setInterval(() => {
         let date = new Date();
-        let datedate = ''
         if (date.getHours() + 3 === 24)
-            datedate = date.getDate() + 1
+            superDate = date.getDate() + 1
         else
-            datedate = date.getDate()
+            superDate = date.getDate()
         readCompliments()
         /*if (!arr.length) {
             clearInterval(complimentInterval)
         }
-        else*/ if (datedate === currentDate) {
+        else*/ if (superDate === currentDate) {
             if ((date.getHours() + 3) === firstCompTime && !fir) {
                 fir = !fir
                 sendCompliment()
