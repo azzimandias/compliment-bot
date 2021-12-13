@@ -154,6 +154,7 @@ async function activateInterval() {
                 dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
+                flag = false
                 console.log('SEND FIR')
             }
             else if ((date.getHours() + 3) === secondCompTime && !sec) {
@@ -173,7 +174,6 @@ async function activateInterval() {
             console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
             sec = false
-            flag = false
         }
     }, 60000);
 }
