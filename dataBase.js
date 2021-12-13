@@ -29,6 +29,8 @@ class DataBase {
         let compliments = await db.query(`SELECT compliment FROM compliments`)
         console.log(compliments)
     }
-
+    async addId() {
+        await db.query(`ALTER TABLE compliments ADD COLUMN id SERIAL PRIMARY KEY`)
+    }
 }
 module.exports = new DataBase()
