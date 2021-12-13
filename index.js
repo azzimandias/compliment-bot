@@ -132,10 +132,10 @@ const parseCorgisPhotos = async () => {
 async function activateInterval() {
     isSuccess = '✅'
     console.log('deploy success')
-    const complimentInterval = setInterval(() => {
+    const complimentInterval = setInterval(async () => {
         let date = new Date();
         readCompliments()
-        comps = dataBase.getCompliments()
+        comps = await dataBase.getCompliments()
         console.log(comps)
         /*if (!arr.length) {
             clearInterval(complimentInterval)
@@ -143,16 +143,16 @@ async function activateInterval() {
         else*/ if (date.getDate() === currentDate) {
             if (date.getHours() === firstCompTime && !fir) {
                 fir = true
-                sendCompliment(comps)
-                dataBase.shiftCompliments()
+                await sendCompliment(comps)
+                await dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
                 console.log('SEND FIR')
             }
             else if (date.getHours() === secondCompTime && !sec) {
                 sec = true
-                sendCompliment(comps)
-                dataBase.shiftCompliments()
+                await sendCompliment(comps)
+                await dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
                 console.log('SEND SEC')

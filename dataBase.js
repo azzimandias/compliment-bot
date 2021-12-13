@@ -3,7 +3,7 @@ const db = require('./db')
 class DataBase {
     async getCompliments() {
         let compliments = await db.query(`SELECT compliment FROM compliments`)
-        return compliments.rows.then(result => result)
+        return compliments.rows
     }
     async setCompliments(compliments) {
         if (db.query(`SELECT compliment FROM compliments`).rows !== undefined) {
