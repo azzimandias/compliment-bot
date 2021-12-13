@@ -57,7 +57,6 @@ let firstCompTime = 0
 let secondCompTime = 0
 let fir = false
 let sec = false
-let superDate = ''
 let comps = []
 let flag = false
 
@@ -135,41 +134,21 @@ async function activateInterval() {
     console.log('deploy success')
     const complimentInterval = setInterval(() => {
         let date = new Date();
-        if (date.getHours() + 3 === 24 && !flag) {
-            superDate = date.getDate() + 1
-            flag = true
-        }
-        else {
-            superDate = date.getDate()
-        }
-        let hour = date.getHours() + 3
-        switch (hour) {
-            case 24:
-                hour = 0
-                break;
-            case 25:
-                hour = 1
-                break;
-            case 26:
-                hour = 2
-                break;
-        }
         readCompliments()
         comps = dataBase.getCompliments()
         /*if (!arr.length) {
             clearInterval(complimentInterval)
         }
-        else*/ if (superDate === currentDate) {
-            if ((date.getHours() + 3) === firstCompTime && !fir) {
+        else*/ if (date.getDate() === currentDate) {
+            if (date.getHours() === firstCompTime && !fir) {
                 fir = true
-                flag = false
                 sendCompliment(comps)
                 dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
                 console.log('SEND FIR')
             }
-            else if /*(*/(date.getHours() /*+ 3)*/ === secondCompTime && !sec) {
+            else if (date.getHours() === secondCompTime && !sec) {
                 sec = true
                 sendCompliment(comps)
                 dataBase.shiftCompliments()
@@ -183,7 +162,7 @@ async function activateInterval() {
             currentDate = date.getDate()
             firstCompTime = randomInteger(7, 15)
             secondCompTime = 22 //randomInteger(17, 23)
-            console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
+            console.log(`fir - ${firstCompTime + 3}, sec - ${secondCompTime + 3}`)
             fir = false
             sec = false
         }
