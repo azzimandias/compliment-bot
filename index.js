@@ -58,7 +58,6 @@ let secondCompTime = 0
 let fir = false
 let sec = false
 let comps = []
-let flag = false
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -217,7 +216,7 @@ async function forDev(text, msg) {
         await sendComplimentForce();
     }
     else if (text === '/log') {
-        await bot.sendMessage(devId, `Status - ${isSuccess}\nFirst comp - ${firstCompTime}\nSecond comp - ${secondCompTime}\n#log`)
+        await bot.sendMessage(devId, `Status - ${isSuccess}\nFirst comp - ${firstCompTime + 3}\nSecond comp - ${secondCompTime + 3}\n#log`)
     }
     else {
         await bot.sendMessage(devId, `${errorPhrases[randomInteger(0, 4)]}\n#dev #prog`)
