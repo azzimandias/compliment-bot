@@ -59,6 +59,7 @@ let fir = false
 let sec = false
 let superDate = ''
 let comps = []
+let flag = false
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -134,10 +135,13 @@ async function activateInterval() {
     console.log('deploy success')
     const complimentInterval = setInterval(() => {
         let date = new Date();
-        if (date.getHours() + 3 === 24)
+        if (date.getHours() + 3 === 24 && !flag) {
             superDate = date.getDate() + 1
-        else
+            flag = true
+        }
+        else {
             superDate = date.getDate()
+        }
         readCompliments()
         comps = dataBase.getCompliments()
         /*if (!arr.length) {
@@ -169,6 +173,7 @@ async function activateInterval() {
             console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
             sec = false
+            flag = false
         }
     }, 60000);
 }
