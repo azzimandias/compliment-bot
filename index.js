@@ -135,7 +135,9 @@ async function activateInterval() {
     const complimentInterval = setInterval(() => {
         let date = new Date();
         readCompliments()
-        comps = dataBase.getCompliments().then(result => result)
+        comps = dataBase.getCompliments().then(result => {
+            return result
+        })
         console.log(comps)
         /*if (!arr.length) {
             clearInterval(complimentInterval)
@@ -162,7 +164,7 @@ async function activateInterval() {
             console.log('NEW DAY')
             currentDate = date.getDate()
             firstCompTime = randomInteger(7, 15)
-            secondCompTime = 22 //randomInteger(17, 23)
+            secondCompTime = 23 //randomInteger(17, 23)
             console.log(`fir - ${firstCompTime + 3}, sec - ${secondCompTime + 3}`)
             fir = false
             sec = false
