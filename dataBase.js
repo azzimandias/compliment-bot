@@ -15,6 +15,7 @@ class DataBase {
     async setCompliments(compliments) {
         if (db.query(`SELECT compliment FROM compliments`).rows !== []) {
             console.log('get')
+            console.log(db.query(`SELECT compliment FROM compliments`).rows)
             return this.getCompliments()
         }
         for (let comp of compliments) {
