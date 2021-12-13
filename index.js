@@ -161,7 +161,7 @@ async function activateInterval() {
             console.log('NEW DAY')
             currentDate = date.getDate()
             firstCompTime = randomInteger(7, 15)
-            secondCompTime = 23 //randomInteger(17, 23)
+            secondCompTime = randomInteger(17, 23)
             console.log(`fir - ${firstCompTime + 3}, sec - ${secondCompTime + 3}`)
             fir = false
             sec = false
