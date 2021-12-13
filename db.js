@@ -4,6 +4,7 @@ const pool = new Pool({
     database: 'dahcii52epf2v7',
     user: 'fxecnjmqfzlmhc',
     port: 5432,
-    password: process.env.DB_PASSWORD
+    password: process.env.DB_PASSWORD,
+    uri: process.env.DB_URI
 })
 module.exports = pool
