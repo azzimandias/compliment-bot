@@ -135,7 +135,7 @@ async function activateInterval() {
     const complimentInterval = setInterval(() => {
         let date = new Date();
         readCompliments()
-        comps = dataBase.getCompliments()
+        comps = dataBase.getCompliments().then(result => result)
         console.log(comps)
         /*if (!arr.length) {
             clearInterval(complimentInterval)
