@@ -13,9 +13,8 @@ class DataBase {
         return compliments.rows
     }
     async setCompliments(compliments) {
-        if (db.query(`SELECT compliment FROM compliments`).rows !== []) {
+        if (db.query(`SELECT compliment FROM compliments`).rows !== undefined) {
             console.log('get')
-            console.log(db.query(`SELECT compliment FROM compliments`).rows)
             return this.getCompliments()
         }
         for (let comp of compliments) {
@@ -32,7 +31,12 @@ class DataBase {
         console.log(compliments)
     }
     async addId() {
-        await db.query(`ALTER TABLE compliments ADD COLUMN id SERIAL PRIMARY KEY`)
+        if (db.query(`SELECT id FROM compliments`).rows !== undefined) {
+            await db.query(`ALTER TABLE compliments DROP COLUMN id`)
+        }
+        else {
+            await db.query(`ALTER TABLE compliments ADD COLUMN id SERIAL PRIMARY KEY`)
+        }
     }
 }
 module.exports = new DataBase()
