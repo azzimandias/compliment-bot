@@ -57,6 +57,7 @@ let secondCompTime = 0
 let fir = false
 let sec = false
 let superDate = ''
+let comps = []
 
 function randomInteger(min, max) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -77,8 +78,9 @@ const parseCompliments = async () => {
             compliments.push(title)
         })
     }
-    let comp = await dataBase.setCompliments()
-    await dataBase.getCompliments()
+
+    comps = await dataBase.setCompliments(compliments)
+
     if (!(fs.statSync(path.join(__dirname, 'data', 'compliments.txt'))).size) {
         mutateCompliments(compliments)
     }
@@ -135,19 +137,22 @@ async function activateInterval() {
         else
             superDate = date.getDate()
         readCompliments()
+        comps = dataBase.getCompliments()
         /*if (!arr.length) {
             clearInterval(complimentInterval)
         }
         else*/ if (superDate === currentDate) {
             if ((date.getHours() + 3) === firstCompTime && !fir) {
                 fir = !fir
-                sendCompliment()
+                sendCompliment(comps)
+                dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
             }
             else if ((date.getHours() + 3) === secondCompTime && !sec) {
                 sec = !sec
-                sendCompliment()
+                sendCompliment(comps)
+                dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
             }
@@ -165,15 +170,17 @@ async function activateInterval() {
 
 async function sendComplimentForce() {
     readCompliments()
-    await sendCompliment()
+    comps = await dataBase.getCompliments()
+    await sendCompliment(comps)
+    await dataBase.shiftCompliments()
     arr.splice(0, 1);
     mutateCompliments(arr)
 }
 
-async function sendCompliment() {
-    await bot.sendMessage(devId, `${arr[0]}\n❤️💫💘❤️‍🔥\n#compliment`)
-    await bot.sendMessage(testerId, `${arr[0]}\n❤️💫💘❤️‍🔥\n#compliment`)
-    await bot.sendMessage(userId, `${arr[0]}\n❤️💫💘❤️‍🔥\n#compliment`)
+async function sendCompliment(comps) {
+    await bot.sendMessage(devId, `${comps[0].compliment}\n❤️💫💘❤️‍🔥\n#compliment`)
+    await bot.sendMessage(testerId, `${comps[0].compliment}\n❤️💫💘❤️‍🔥\n#compliment`)
+    await bot.sendMessage(userId, `${comps[0].compliment}\n❤️💫💘❤️‍🔥\n#compliment`)
     if (randomInteger(0, 9) > 4) {
         let sticker = randomInteger(0, 9)
         await bot.sendSticker(devId, `${cuteStickersArray[sticker]}`)
