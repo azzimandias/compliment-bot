@@ -149,16 +149,16 @@ async function activateInterval() {
         }
         else*/ if (superDate === currentDate) {
             if ((date.getHours() + 3) === firstCompTime && !fir) {
-                fir = !fir
+                fir = true
+                flag = false
                 sendCompliment(comps)
                 dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
-                flag = false
                 console.log('SEND FIR')
             }
             else if ((date.getHours() + 3) === secondCompTime && !sec) {
-                sec = !sec
+                sec = true
                 sendCompliment(comps)
                 dataBase.shiftCompliments()
                 arr.splice(0, 1);
@@ -169,7 +169,7 @@ async function activateInterval() {
         else {
             console.log('NEW DAY')
             currentDate = date.getDate()
-            firstCompTime = randomInteger(7, 15)
+            firstCompTime = 0 //randomInteger(7, 15)
             secondCompTime = randomInteger(17, 23)
             console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
