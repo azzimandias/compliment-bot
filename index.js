@@ -150,6 +150,7 @@ async function activateInterval() {
                 dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
+                console.log('SEND FIR')
             }
             else if ((date.getHours() + 3) === secondCompTime && !sec) {
                 sec = !sec
@@ -157,9 +158,11 @@ async function activateInterval() {
                 dataBase.shiftCompliments()
                 arr.splice(0, 1);
                 mutateCompliments(arr)
+                console.log('SEND SEC')
             }
         }
         else {
+            console.log('NEW DAY')
             currentDate = date.getDate()
             firstCompTime = randomInteger(7, 15)
             secondCompTime = randomInteger(17, 23)
@@ -177,6 +180,7 @@ async function sendComplimentForce() {
     await dataBase.shiftCompliments()
     arr.splice(0, 1);
     mutateCompliments(arr)
+    console.log('SEND')
 }
 
 async function sendCompliment(comps) {
