@@ -136,11 +136,10 @@ async function activateInterval() {
         let date = new Date();
         readCompliments()
         comps = await dataBase.getCompliments()
-        console.log(comps)
-        /*if (!arr.length) {
+        if (!comps[0].compliment) {
             clearInterval(complimentInterval)
         }
-        else*/ if (date.getDate() === currentDate) {
+        else if (date.getDate() === currentDate) {
             if (date.getHours() === firstCompTime && !fir) {
                 fir = true
                 await sendCompliment(comps)
