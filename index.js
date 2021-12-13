@@ -81,7 +81,7 @@ const parseCompliments = async () => {
     }
 
     comps = await dataBase.setCompliments(compliments)
-    await dataBase.addId()
+    //await dataBase.addId()
 
     if (!(fs.statSync(path.join(__dirname, 'data', 'compliments.txt'))).size) {
         mutateCompliments(compliments)
