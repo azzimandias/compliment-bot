@@ -1,3 +1,4 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED='0'
 const TelegramApi = require('node-telegram-bot-api')
 const axios = require('axios')
 const cheerio = require('cheerio')
