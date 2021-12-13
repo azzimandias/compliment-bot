@@ -1,6 +1,5 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED='0'
 const db = require('./db')
-const Console = require("console");
 class DataBase {
     async getCompliments() {
         let compliments = await db.query(`SELECT compliment FROM compliments`)
@@ -22,7 +21,7 @@ class DataBase {
         await db.query(`ALTER TABLE compliments DROP COLUMN id`)
         await db.query(`ALTER TABLE compliments ADD COLUMN id SERIAL PRIMARY KEY`)
         let compliments = await db.query(`SELECT compliment FROM compliments`)
-        console.log(compliments)
+        //console.log(compliments)
     }
     async addId() {
         if (db.query(`SELECT id FROM compliments`).rows !== undefined) {

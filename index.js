@@ -82,7 +82,7 @@ const parseCompliments = async () => {
     }
 
     comps = await dataBase.setCompliments(compliments)
-    //await dataBase.addId()
+    await dataBase.addId()
 
     if (!(fs.statSync(path.join(__dirname, 'data', 'compliments.txt'))).size) {
         mutateCompliments(compliments)
@@ -169,7 +169,7 @@ async function activateInterval() {
                 mutateCompliments(arr)
                 console.log('SEND FIR')
             }
-            else if ((date.getHours() + 3) === secondCompTime && !sec) {
+            else if /*(*/(date.getHours() /*+ 3)*/ === secondCompTime && !sec) {
                 sec = true
                 sendCompliment(comps)
                 dataBase.shiftCompliments()
@@ -181,8 +181,8 @@ async function activateInterval() {
         else {
             console.log('NEW DAY')
             currentDate = date.getDate()
-            firstCompTime = 0 //randomInteger(7, 15)
-            secondCompTime = randomInteger(17, 23)
+            firstCompTime = randomInteger(7, 15)
+            secondCompTime = 22 //randomInteger(17, 23)
             console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
             sec = false
