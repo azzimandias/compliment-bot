@@ -161,8 +161,8 @@ async function activateInterval() {
         }
         else {
             currentDate = date.getDate()
-            firstCompTime = randomInteger(4, 13)
-            secondCompTime = randomInteger(14, 20)
+            firstCompTime = randomInteger(7, 15)
+            secondCompTime = randomInteger(17, 23)
             console.log(`fir - ${firstCompTime}, sec - ${secondCompTime}`)
             fir = false
             sec = false
