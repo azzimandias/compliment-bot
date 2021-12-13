@@ -142,6 +142,18 @@ async function activateInterval() {
         else {
             superDate = date.getDate()
         }
+        let hour = date.getHours() + 3
+        switch (hour) {
+            case 24:
+                hour = 0
+                break;
+            case 25:
+                hour = 1
+                break;
+            case 26:
+                hour = 2
+                break;
+        }
         readCompliments()
         comps = dataBase.getCompliments()
         /*if (!arr.length) {
