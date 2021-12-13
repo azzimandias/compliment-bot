@@ -6,6 +6,6 @@ const pool = new Pool({
     port: 5432,
     host: 'ec2-52-209-246-87.eu-west-1.compute.amazonaws.com',*/
     uri: process.env.DB_URI,
-    //ssl: true
+    ssl: true
 })
 module.exports = pool
