@@ -165,7 +165,7 @@ async function activateInterval() {
             fir = false
             sec = false
         }
-    }, 60000);
+    }, 3600000);
 }
 
 async function sendComplimentForce() {
