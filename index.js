@@ -210,7 +210,7 @@ async function forDev(text, msg) {
         await  bot.sendSticker(devId, 'https://tlgrm.ru/_/stickers/6dd/71d/6dd71dd3-89eb-4f4c-b5c4-9dc46269d022/192/15.webp');
     }
     else if (text.split('\n')[0] === '/send' && text.split('\n')[1] !== ' ') {
-        await bot.sendMessage(userId, `@azzimandias\n${text.split('\n')[1]}\n#master`);
+        await bot.sendMessage(userId, `${text.split('\n')[1]}`);
     }
     else if (text === '/comp') {
         await sendComplimentForce();
